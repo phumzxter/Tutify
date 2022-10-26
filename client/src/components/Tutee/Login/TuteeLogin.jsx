@@ -14,7 +14,6 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 
 
-
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -37,6 +36,7 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(1)
   }
 }));
+
 function BootstrapDialogTitle(props) {
   const { children, onClose, ...other } = props;
 
@@ -91,18 +91,16 @@ export default function TuteeLogin() {
 
   //popup content
   const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+
   const handleClose = () => {
     setOpen(false);
+    window.location.reload();
   };
-//popupcontent
 
   const handleSubmit = (event) => {
     event.preventDefault();
     if (isSignup) {
-     
+    
       tuteeSignup(form)
         .then((response) => {
           localStorage.setItem('token', response.data.token);
@@ -110,7 +108,6 @@ export default function TuteeLogin() {
           //if you want ot get name email password or id or token somewhere.
           //just do const user = localStorage.getItem("user");
           //user.result.token, user.result.name...etc
-
           localStorage.setItem('role', 'tutee');
           // console.log(localStorage.getItem("user"));
           // console.log(localStorage.getItem("token"));
@@ -128,12 +125,9 @@ export default function TuteeLogin() {
             )
             .then((r) => {
               console.log(r);
-             handleClickOpen(); 
-           
+              setOpen(true); 
             });
-         
-          navigate('/tutee/dashboard');
-          //window.location.reload(true);
+
         })
         .catch((error) => {
           if (error.response) {
@@ -233,24 +227,19 @@ export default function TuteeLogin() {
           id="customized-dialog-title"
           onClose={handleClose}
         >
-        Tutee Sign Up
+        Welcome to Au Tutify, Tutee!
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
-          Your account has been successfully created. 
+          Au Tutify is a 1:1 Tutoring Platform.  
           </Typography>
           <Typography gutterBottom>
-          Login and enjoy our services.
+          Whatever subject, whatever skill one needs help from, with ease!
           </Typography>
-          {/* <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo
-            cursus magna, vel scelerisque nisl consectetur et. Donec sed odio
-            dui. Donec ullamcorper nulla non metus auctor fringilla.
-          </Typography> */}
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>
-           Okay
+           Let's Learn!
           </Button>
         </DialogActions>
       </BootstrapDialog>

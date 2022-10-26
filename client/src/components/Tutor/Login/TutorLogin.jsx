@@ -25,9 +25,6 @@ function Copyright(props) {
   );
 }
 
-const theme = createTheme();
-const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
-
 //popup content 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialogContent-root": {
@@ -37,11 +34,12 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     padding: theme.spacing(1)
   }
 }));
+
 function BootstrapDialogTitle(props) {
   const { children, onClose, ...other } = props;
 
   return (
-    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+    <DialogTitle sx={{ m: 2, p: 2 }} {...other}>
       {children}
       {onClose
         ? <IconButton
@@ -49,8 +47,8 @@ function BootstrapDialogTitle(props) {
             onClick={onClose}
             sx={{
               position: "absolute",
-              right: 8,
-              top: 8,
+              right: 1,
+              top: 1,
               color: theme => theme.palette.grey[500]
             }}
           >
@@ -62,25 +60,17 @@ function BootstrapDialogTitle(props) {
 }
 //popup content
 
+const theme = createTheme();
+const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
 
-export default function TuteeLogin() {
-  //popup content
-  const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-//popupcontent
-  
+
+export default function TuteeLogin() {  
   //switch user type
   const navigate = useNavigate();
   const [checked, setChecked] = React.useState(false);
   const switchUserType = () => {
     navigate('/tutee/login');
   };
-
 
   //switch login signup
   const [isSignup, setIsSignup] = React.useState(false);
@@ -98,9 +88,17 @@ export default function TuteeLogin() {
     setForm({ ...form, [name]: value });
   };
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+    window.location.reload();
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (isSignup) {
+     
       signUp(form)
         .then((response) => {
           localStorage.setItem('token', response.data.token);
@@ -108,6 +106,9 @@ export default function TuteeLogin() {
           localStorage.setItem('role', 'tutor');
           // console.log(localStorage.getItem("token"));
           let user = JSON.parse(localStorage.getItem('user'));
+           setOpen(true);
+          //   window.location.reload();
+
           axios
             .post(
               'https://api.chatengine.io/users/',
@@ -118,12 +119,11 @@ export default function TuteeLogin() {
                 },
               } // Headers object
             )
-            .then((r) => {
+            .then((r) => { 
               console.log(r);
-             handleClickOpen();    
+              // setOpen(true);
+            // window.location.reload();
             });
-
-          navigate('/tutor/dashboard');
 
         })
         .catch((error) => {
@@ -222,24 +222,21 @@ export default function TuteeLogin() {
           id="customized-dialog-title"
           onClose={handleClose}
         >
-        Tutor Sign Up
+        Welcome to Au Tutify, Tutor!
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>
-          Your account has been successfully created. 
+          Au Tutify is a 1:1 Tutee Appointing Platform. 
           </Typography>
           <Typography gutterBottom>
-          Login and enjoy our services.
+          As a tutor, you will be teaching. 
+          <br></br>
+          sdiuhdsufhsdufisduhfiuhsiuhsdifuhfishfiuhsi
           </Typography>
-          {/* <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo
-            cursus magna, vel scelerisque nisl consectetur et. Donec sed odio
-            dui. Donec ullamcorper nulla non metus auctor fringilla.
-          </Typography> */}
         </DialogContent>
         <DialogActions>
           <Button autoFocus onClick={handleClose}>
-           Okay
+           Let's Teach!
           </Button>
         </DialogActions>
       </BootstrapDialog>
