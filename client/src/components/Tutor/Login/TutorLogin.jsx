@@ -229,7 +229,7 @@ export default function TuteeLogin() {
           Your account has been successfully created. 
           </Typography>
           <Typography gutterBottom>
-          Login and enjoy our services.
+          Login and enjoy Au Tutify.
           </Typography>
           {/* <Typography gutterBottom>
             Aenean lacinia bibendum nulla sed consectetur. Praesent commodo
